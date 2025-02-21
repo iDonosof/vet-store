@@ -1,7 +1,6 @@
 import express, { Express, Router } from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import path from "path";
 import { createServer } from "http";
 
 import { DEFAULT_PORT } from "./config/enviroment";
@@ -18,7 +17,6 @@ const rootRouter: Router = Router();
 const httpServer = createServer(app);
 
 app.use(express.json());
-app.use("/public", express.static(path.join(__dirname, "public"))); // TODO: Server the static files
 app.use(cookieParser());
 app.use(morgan("dev"));
 
@@ -26,7 +24,6 @@ app.use("/api/v1", rootRouter);
 rootRouter.use("/user", userRouter);
 rootRouter.use("/category", categoryRouter);
 rootRouter.use("product", productRouter);
-// TODO: Create the routes to chat
 
 app.use(error_handling);
 
