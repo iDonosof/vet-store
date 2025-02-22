@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { validateStringInputs } from "../utils/validations";
+import { isValidInputs } from "../utils/validations";
 
 import { Category } from "../models";
 

@@ -7,6 +7,10 @@ const roles: { [key: string]: Role } = {
     "Super Admin": {
         id: 1,
         name: "Super Admin",
+        translations: {
+            en: "Super Admin",
+            es: "Super Administrador",
+        },
         rights: [
             "read_user",
             "create_user",
@@ -27,6 +31,10 @@ const roles: { [key: string]: Role } = {
     Admin: {
         id: 2,
         name: "Admin",
+        translations: {
+            en: "Admin",
+            es: "Administrador",
+        },
         rights: [
             "read_user",
             "create_user",
@@ -43,9 +51,13 @@ const roles: { [key: string]: Role } = {
             "delete_product",
         ],
     },
-    Veterinario: {
+    Veterinarian: {
         id: 3,
-        name: "Veterinario",
+        name: "Veterinarian",
+        translations: {
+            en: "Veterinarian",
+            es: "Veterinario",
+        },
         rights: [
             "read_user",
             "update_user",
@@ -56,9 +68,13 @@ const roles: { [key: string]: Role } = {
             "create_product",
         ],
     },
-    Vendedor: {
+    Seller: {
         id: 4,
-        name: "Vendedor",
+        name: "Seller",
+        translations: {
+            en: "Seller",
+            es: "Vendedor",
+        },
         rights: [
             "read_user",
             "update_user",
@@ -69,9 +85,13 @@ const roles: { [key: string]: Role } = {
             "create_product",
         ],
     },
-    Cliente: {
+    Client: {
         id: 5,
-        name: "Cliente",
+        name: "Client",
+        translations: {
+            en: "Client",
+            es: "Cliente",
+        },
         rights: ["read_category", "read_product"],
     },
 };
