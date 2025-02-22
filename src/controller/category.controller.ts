@@ -32,12 +32,8 @@ export const getCategory = async (req: Request, res: Response): Promise<void> =>
 export const createCategory = async (req: Request, res: Response): Promise<void> => {
     const { name, description, status = CATEGORY_STATUS.ENABLED.id }: Category = req.body;
 
-    try {
-        validateStringInputs({ name, description });
-    } catch (e) {
-        if (e instanceof Error) {
-            res.status(400).json({ error: e.message });
-        }
+    if (isValidInputs({ name, description })) {
+        res.status(400).json({ error: "Invalid input data" });
         return;
     }
 
@@ -54,12 +50,8 @@ export const updateCategory = async (req: Request, res: Response): Promise<void>
         return;
     }
 
-    try {
-        validateStringInputs({ name, description });
-    } catch (e) {
-        if (e instanceof Error) {
-            res.status(400).json({ error: e.message });
-        }
+    if (isValidInputs({ name, description })) {
+        res.status(400).json({ error: "Invalid input data" });
         return;
     }
 
@@ -77,7 +69,7 @@ export const updateCategory = async (req: Request, res: Response): Promise<void>
     category.status = status;
     await category.save();
 
-    res.status(200).json({ message: "Category updated successfully" });
+    res.status(200).json(category);
 };
 
 export const deleteCategory = async (req: Request, res: Response): Promise<void> => {
