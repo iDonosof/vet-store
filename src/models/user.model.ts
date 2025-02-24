@@ -1,6 +1,5 @@
 import connection from "../database/connection";
 import { Model, InferAttributes, InferCreationAttributes, DataTypes, CreationOptional } from "sequelize";
-import { generateUUID } from "../utils/uuid";
 import { encrypt } from "../utils/encrypt";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -70,7 +69,6 @@ User.init(
 );
 
 User.beforeCreate(async (user: User) => {
-    user.resource_id = generateUUID();
     user.password = await encrypt(user.password);
 });
 

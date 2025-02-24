@@ -1,6 +1,6 @@
+import { randomUUID } from "crypto";
 import connection from "../database/connection";
 import { Model, InferAttributes, InferCreationAttributes, DataTypes, CreationOptional } from "sequelize";
-import { generateUUID } from "../utils/uuid";
 
 class Category extends Model<InferAttributes<Category>, InferCreationAttributes<Category>> {
     declare id: CreationOptional<number>;
@@ -33,7 +33,7 @@ Category.init(
         status: {
             type: DataTypes.INTEGER,
             allowNull: false,
-        }
+        },
     },
     {
         sequelize: connection,
@@ -43,7 +43,7 @@ Category.init(
 );
 
 Category.beforeCreate(async (category: Category) => {
-    category.resource_id = generateUUID();
+    category.resource_id = randomUUID();
 });
 
 export default Category;

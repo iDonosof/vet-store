@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Op } from "sequelize";
 
-import { validateStringInputs } from "../utils/validations";
+import { isValidInputs } from "../utils/validations";
 
 import { Product } from "../models";
 
@@ -50,12 +50,8 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         stock = MINIMUM_STOCK_ALLOWED,
     }: Product = req.body;
 
-    try {
-        validateStringInputs({ product_name, product_price, category_id, stock });
-    } catch (e) {
-        if (e instanceof Error) {
-            res.status(400).json({ error: e.message });
-        }
+    if (!isValidInputs({ product_name, product_price, category_id, stock })) {
+        res.status(400).json({ error: "Invalid input data" });
         return;
     }
 
@@ -80,12 +76,8 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
         stock = MINIMUM_STOCK_ALLOWED,
     }: Product = req.body;
 
-    try {
-        validateStringInputs({ product_name, product_price, category_id, stock });
-    } catch (e) {
-        if (e instanceof Error) {
-            res.status(400).json({ error: e.message });
-        }
+    if (!isValidInputs({ product_name, product_price, category_id, stock })) {
+        res.status(400).json({ error: "Invalid input data" });
         return;
     }
 
@@ -96,13 +88,11 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
         return;
     }
 
-    await product.update({
-        product_name,
-        product_description,
-        product_price,
-        category_id,
-        stock,
-    });
+    product.product_name = product_name;
+    product.product_description = product_description;
+    product.product_price = product_price;
+    product.category_id = category_id;
+    product.stock = stock;
 
     await product.save();
 
@@ -119,9 +109,7 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
         return;
     }
 
-    await product.update({
-        stock: MINIMUM_STOCK_ALLOWED,
-    });
+    product.stock = MINIMUM_STOCK_ALLOWED;
 
     await product.save();
 
