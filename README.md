@@ -40,9 +40,3 @@ values(
 	1
 );
 ```
-
-## Concerns
-
-1. El chat esta sujeto a condiciones muy especificas para que funcione correctamente.
-2. No se puede crear `Super Usuario` a travez de la API
-3. Todos los endpoint disponibles funcionan correctamente pero solo se crearon screenshots de los usuarios
