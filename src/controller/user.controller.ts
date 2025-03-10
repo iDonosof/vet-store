@@ -9,6 +9,8 @@ import { User } from "../models";
 
 import BadRequestError from "../error/BadRequestError";
 import NotFoundError from "../error/NotFoundError";
+import UnauthorizedError from "../error/UnauthorizedError";
+
 import Role from "../types/role";
 import Status from "../types/Status";
 
@@ -24,7 +26,7 @@ export const signUp = async ({
         throw new BadRequestError("Invalid input data");
     }
 
-    const user = await User.create({
+    const user: User = await User.create({
         username,
         password,
         first_name,
@@ -39,7 +41,7 @@ export const signUp = async ({
     return user;
 };
 
-export const signIn = async ({ username, password }: User): Promise<string> => {
+export const signIn = async (username: string, password: string): Promise<string> => {
     if (!isValidInputs({ username, password })) {
         throw new BadRequestError("Invalid input data");
     }
@@ -55,7 +57,7 @@ export const signIn = async ({ username, password }: User): Promise<string> => {
     }
 
     if (!(await compare(password, user.password))) {
-        throw new NotFoundError("Username or password invalid");
+        throw new UnauthorizedError("Username or password invalid");
     }
 
     return generate_token({ resource_id: user.resource_id });
@@ -66,7 +68,7 @@ export const getUsers = async (): Promise<User[]> => {
     return users;
 };
 
-export const getUser = async (resource_id: string | undefined): Promise<User> => {
+export const getUser = async (resource_id: string = ""): Promise<User> => {
     if (!resource_id) {
         throw new BadRequestError("Resource id is required");
     }

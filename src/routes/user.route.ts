@@ -33,8 +33,8 @@ userRouter.post("/signup", async (req: Request, res: Response, next: NextFunctio
 
 userRouter.post("/signin", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const userInputData: User = req.body;
-        const token: string = await signIn(userInputData);
+        const { username, password } = req.body;
+        const token: string = await signIn(username, password);
         res.status(201).json({ token });
     } catch (err) {
         next(err);
